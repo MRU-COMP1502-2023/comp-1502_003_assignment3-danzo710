@@ -420,6 +420,8 @@ public class StoreManager {
 				foundToy = toy;
 			}
 		}
+		System.out.println("This Item Found: ");
+		System.out.println(foundToy);
 
 		while (wrongInput) {
 
