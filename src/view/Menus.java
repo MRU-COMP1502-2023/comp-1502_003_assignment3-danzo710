@@ -33,7 +33,8 @@ public class Menus {
 			System.out.println("(1) Search Inventory and Purchase Toy");
 			System.out.println("(2) Add New Toy");
 			System.out.println("(3) Remove Toy");
-			System.out.println("(4) Save and Exit");
+			System.out.println("(4) Make a Gift Suggestion");
+			System.out.println("(5) Save and Exit");
 			System.out.println();
 			System.out.print("Enter Option: ");
 			introMenuOption = keyboard.next();
@@ -163,7 +164,7 @@ public class Menus {
 			input = keyboard.nextLine();
 		}
 	}
-
+	public
 
 	public void removeToyMenu(char userRemoteToyInputChar) throws IOException {
 		boolean rightInput = false;

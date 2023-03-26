@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 import model.Animals;
@@ -181,12 +182,55 @@ public class StoreManager {
 			char inputResponse = userRemoveToy(); // 0298753495
 			break;
 		case '4':
-			exit();
+			giftSuggestion();
 			break;
+			case'5':
+				exit();
+				break;
 		default:
 			System.out.println("This is not a valid option! Try again.");
 			start();
 		}
+	}
+
+	private void giftSuggestion() {
+		System.out.println("What is the age? Press s tp skip");
+		String giftAge = keyboard.nextLine();
+		System.out.println("What is the Category? Press s to skip");
+		String giftCategory = keyboard.nextLine();
+		System.out.println("What is the Price Range?(separate the minimum and maximum with a - no $ needed) Press s to skip");
+		String giftPriceRange = keyboard.nextLine();
+//		String[] priceRange = giftPriceRange.split("-");
+//		double minPrice =   Double.parseDouble(priceRange[0]);
+//		double maxPrice = 	Double.parseDouble(priceRange[1]);
+		//searchGiftOptions(giftAge, giftCategory, minPrice,maxPrice);
+	}
+	public ArrayList<Toys> searchGiftOptions(String age, String category, String priceRange){
+		ArrayList<Toys> giftList = new ArrayList<Toys>();
+
+		char ageChar;
+		ageChar = Character.toUpperCase(age.charAt(0));
+		char priceRangeChar = Character.toUpperCase(priceRange.charAt(0));
+
+		for(Toys toy: toyList){
+			if(ageChar != 'S') {
+				if (Integer.parseInt(age) >= toy.getAgeAppropriate()) {
+					giftList.add(toy);
+				}
+			}
+			if (category.equalsIgnoreCase(toy.getCategory())) {
+					giftList.add(toy);
+			}
+			}
+			if(priceRangeChar != 'S'){
+				if() {
+
+				}
+
+			}
+		}
+
+		return giftList;
 	}
 
 	/**
