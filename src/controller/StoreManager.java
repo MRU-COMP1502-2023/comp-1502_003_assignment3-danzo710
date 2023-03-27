@@ -194,11 +194,11 @@ public class StoreManager {
 	}
 
 	private void giftSuggestion() {
-		System.out.println("What is the age? Press s tp skip");
+		System.out.println("What is the age?");
 		String giftAge = keyboard.nextLine();
-		System.out.println("What is the Category? Press s to skip");
+		System.out.println("What is the Category?");
 		String giftCategory = keyboard.nextLine();
-		System.out.println("What is the Price Range?(separate the minimum and maximum with a - no $ needed) Press s to skip");
+		System.out.println("What is the Price Range?(separate the minimum and maximum with a - no $ needed)");
 		String giftPriceRange = keyboard.nextLine();
 //		String[] priceRange = giftPriceRange.split("-");
 //		double minPrice =   Double.parseDouble(priceRange[0]);
@@ -208,12 +208,10 @@ public class StoreManager {
 	public ArrayList<Toys> searchGiftOptions(String age, String category, String priceRange){
 		ArrayList<Toys> giftList = new ArrayList<Toys>();
 
-		char ageChar;
-		ageChar = Character.toUpperCase(age.charAt(0));
 		char priceRangeChar = Character.toUpperCase(priceRange.charAt(0));
 
 		for(Toys toy: toyList){
-			if(ageChar != 'S') {
+			if(!age.equals("")) {
 				if (Integer.parseInt(age) >= toy.getAgeAppropriate()) {
 					giftList.add(toy);
 				}
