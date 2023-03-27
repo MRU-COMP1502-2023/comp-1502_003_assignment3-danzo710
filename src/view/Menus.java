@@ -37,7 +37,7 @@ public class Menus {
 			System.out.println("(5) Save and Exit");
 			System.out.println();
 			System.out.print("Enter Option: ");
-			introMenuOption = keyboard.next();
+			introMenuOption = keyboard.nextLine();
 			option = introMenuOption.charAt(0);
 			return option;
 //			if (Character.isLetter(option)) {
@@ -74,7 +74,7 @@ public class Menus {
 			System.out.println("(4) Back to Main Menu");
 
 			System.out.print("Enter Option: ");
-			searchInventoryMenuOption = keyboard.next();
+			searchInventoryMenuOption = keyboard.nextLine();
 			option = searchInventoryMenuOption.charAt(0);
 
 			if (Character.isLetter(option)) {
@@ -114,11 +114,13 @@ public class Menus {
 		  counter++;
 		  System.out.println("(" + counter + ")" + "Back to Main Menu");
 		  boolean flag = false;
+		  String stringOption;
 		  int option = 0;
 		  while (!flag) {
 
 			  System.out.print("Enter an option to purchase: ");
-			  option = keyboard.nextInt();
+			  stringOption = keyboard.nextLine();
+			  option = Integer.parseInt(stringOption);
 
 			  if (option < counter && option >= 0) {
 				  flag = true;
@@ -164,7 +166,32 @@ public class Menus {
 			input = keyboard.nextLine();
 		}
 	}
-	public
+	public String showMenufindIndenticalType() {
+		System.out.println("Enter (1) Figures");
+		System.out.println("Enter (2) Animals");
+		System.out.println("Enter (3) Puzzles");
+		System.out.println("Enter (4) Board Game");
+		String userInput = keyboard.nextLine();
+		char userInputChar = userInput.charAt(0);
+		String optionChosen = null;
+		switch (Character.toUpperCase(userInputChar)) {
+			case '1':
+				optionChosen = "Figure";
+				break;
+			case '2':
+				optionChosen = "Animal";
+				break;
+			case '3':
+				optionChosen = "Puzzle";
+				break;
+			case '4':
+				optionChosen = "Board Game";
+				break;
+			default:
+				
+		}
+		return optionChosen;
+	}
 
 	public void removeToyMenu(char userRemoteToyInputChar) throws IOException {
 		boolean rightInput = false;

@@ -193,41 +193,40 @@ public class StoreManager {
 		}
 	}
 
-	private void giftSuggestion() {
+	private void giftSuggestion() throws IOException {
 		System.out.println("What is the age?");
 		String giftAge = keyboard.nextLine();
 		System.out.println("What is the Category?");
-		String giftCategory = keyboard.nextLine();
+		String option = M.showMenufindIndenticalType();
 		System.out.println("What is the Price Range?(separate the minimum and maximum with a - no $ needed)");
 		String giftPriceRange = keyboard.nextLine();
-//		String[] priceRange = giftPriceRange.split("-");
-//		double minPrice =   Double.parseDouble(priceRange[0]);
-//		double maxPrice = 	Double.parseDouble(priceRange[1]);
-		//searchGiftOptions(giftAge, giftCategory, minPrice,maxPrice);
+		ArrayList<Toys> giftOptions = searchGiftOptions(giftAge, option, giftPriceRange);
+		M.printInventory(giftOptions);
 	}
 	public ArrayList<Toys> searchGiftOptions(String age, String category, String priceRange){
 		ArrayList<Toys> giftList = new ArrayList<Toys>();
+		double maxPrice = 0;
+		double minPrice = 0;
 
-		char priceRangeChar = Character.toUpperCase(priceRange.charAt(0));
+		if(!priceRange.equals("")) {
+			String[] priceRangeArray = priceRange.split("-");
+			minPrice =   Double.parseDouble(priceRangeArray[0]);
+			maxPrice = 	Double.parseDouble(priceRangeArray[1]);
+		}
 
 		for(Toys toy: toyList){
+			if(category.equalsIgnoreCase(toy.getCategory())){
+				giftList.add(toy);
+			}
 			if(!age.equals("")) {
 				if (Integer.parseInt(age) >= toy.getAgeAppropriate()) {
 					giftList.add(toy);
 				}
 			}
-			if (category.equalsIgnoreCase(toy.getCategory())) {
-					giftList.add(toy);
-			}
-			}
-			if(priceRangeChar != 'S'){
-				if() {
-
-				}
-
+			if(minPrice > toy.getPrice() && maxPrice <= toy.getPrice() ){
+				giftList.add(toy);
 			}
 		}
-
 		return giftList;
 	}
 
@@ -314,21 +313,21 @@ public class StoreManager {
 
 		// Taking user input for common attributes
 		System.out.print("Enter Serial Number: ");
-		String serialNumInput = keyboard.next();
+		String serialNumInput = keyboard.nextLine();
 		// Checks if the serial number is valid
 		isSerialNumValid(serialNumInput);
 		System.out.println();
 
 		System.out.print("Enter Toy Name: ");
-		String userToyName = keyboard.next();
+		String userToyName = keyboard.nextLine();
 		System.out.println();
 
 		System.out.print("Enter Toy Brand: ");
-		String userToyBrand = keyboard.next();
+		String userToyBrand = keyboard.nextLine();
 		System.out.println();
 
 		System.out.print("Enter Toy Price: ");
-		String userInputPrice = keyboard.next();
+		String userInputPrice = keyboard.nextLine();
 		float userToyPrice = Float.parseFloat(userInputPrice);
 		// Exception for if the price is a negative number stops the program
 		if (userToyPrice < 0) {
@@ -337,12 +336,12 @@ public class StoreManager {
 		System.out.println();
 
 		System.out.print("Enter Available Counts: ");
-		String userInputAvailableCount = keyboard.next();
+		String userInputAvailableCount = keyboard.nextLine();
 		int userAvailableCount = Integer.parseInt(userInputAvailableCount);
 		System.out.println();
 
 		System.out.print("Enter Appropriate Age: ");
-		String userInputAgeAppropriate = keyboard.next();
+		String userInputAgeAppropriate = keyboard.nextLine();
 		int userAgeAppropriate = Integer.parseInt(userInputAgeAppropriate);
 		System.out.println();
 
@@ -357,7 +356,7 @@ public class StoreManager {
 		case '1':
 			userToyCategory = "Figure";
 			System.out.print("Enter figure classification(A,H,D): ");
-			String userClassificationInput = keyboard.next();
+			String userClassificationInput = keyboard.nextLine();
 			char userClassification = userClassificationInput.charAt(0);
 			System.out.println();
 			Figure Figure = new Figure(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
@@ -372,11 +371,11 @@ public class StoreManager {
 		case '3':
 			userToyCategory = "Animal";
 			System.out.print("Enter Material: ");
-			String userToyMaterial = keyboard.next();
+			String userToyMaterial = keyboard.nextLine();
 			System.out.println();
 
 			System.out.print("Enter the size: ");
-			String sizeInput = keyboard.next();
+			String sizeInput = keyboard.nextLine();
 			char userToySize = Character.toUpperCase(sizeInput.charAt(0));
 			System.out.println();
 
@@ -394,7 +393,7 @@ public class StoreManager {
 		case '6':
 			userToyCategory = "Puzzle";
 			System.out.print("Enter puzzle type: ");
-			String userPuzzleType = keyboard.next();
+			String userPuzzleType = keyboard.nextLine();
 			System.out.println();
 
 			Puzzles Puzzle = new Puzzles(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
@@ -425,7 +424,7 @@ public class StoreManager {
 			}
 
 			System.out.print("Enter Designer Names (Use ',' to separate the names if there is more than one name):  ");
-			String userToyDesigners = keyboard.next();
+			String userToyDesigners = keyboard.nextLine();
 			System.out.println();
 
 			BoardGames BoardGames = new BoardGames(userToyCategory, userToyName, userToyBrand, userToyPrice,
@@ -468,7 +467,7 @@ public class StoreManager {
 		while (wrongInput) {
 
 			System.out.print("Do you want to remove it? (Y/N)?");
-			userRemoveToyInput = keyboard.next();
+			userRemoveToyInput = keyboard.nextLine();
 			userRemoveToyInputChar = userRemoveToyInput.toLowerCase().charAt(0);
 
 			if (userRemoveToyInputChar == 'y' || userRemoveToyInputChar == 'n') {
@@ -512,7 +511,7 @@ public class StoreManager {
 
 		while (!validSerialNumber) {
 			System.out.print("Enter a Serial Number: ");
-			toySerialNumber = keyboard.next();
+			toySerialNumber = keyboard.nextLine();
 
 			for (int i = 0; i < toySerialNumber.length(); i++) {
 				char serialNumChars = toySerialNumber.charAt(i);
@@ -589,7 +588,7 @@ public class StoreManager {
 			System.out.println("Enter (3) Puzzles");
 			System.out.println("Enter (4) Board Game");
 
-			userInputType = keyboard.next();
+			userInputType = keyboard.nextLine();
 			userInputTypeChar = userInputType.charAt(0);
 			switch (userInputTypeChar) {
 			case '1':
@@ -644,7 +643,7 @@ public class StoreManager {
 		boolean toyFound = false;
 
 		System.out.print("Enter Toy Name: ");
-		String userInput = keyboard.next();
+		String userInput = keyboard.nextLine();
 		userInput = userInput.toLowerCase();
 
 		for (Toys toy : toyList) {

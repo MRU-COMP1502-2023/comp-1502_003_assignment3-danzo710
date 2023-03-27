@@ -14,7 +14,5 @@ public class AppDriver {
 		StoreManager sm = new StoreManager();
 		sm.loadFile();
 		sm.start();
-
-
 	}
 }
