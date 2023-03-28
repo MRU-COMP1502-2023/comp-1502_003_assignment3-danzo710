@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -203,10 +204,15 @@ public class StoreManager {
 		ArrayList<Toys> giftOptions = searchGiftOptions(giftAge, option, giftPriceRange);
 		M.printInventory(giftOptions);
 	}
-	public ArrayList<Toys> searchGiftOptions(String age, String category, String priceRange){
+	public ArrayList<Toys> searchGiftOptions(String stringAge, String category, String priceRange){
 		ArrayList<Toys> giftList = new ArrayList<Toys>();
-		double maxPrice = 0;
+		int age = 0;
+		double maxPrice = 99999999;
 		double minPrice = 0;
+
+		if(!stringAge.equals("")){
+			age = Integer.parseInt(stringAge);
+		}
 
 		if(!priceRange.equals("")) {
 			String[] priceRangeArray = priceRange.split("-");
@@ -215,15 +221,7 @@ public class StoreManager {
 		}
 
 		for(Toys toy: toyList){
-			if(category.equalsIgnoreCase(toy.getCategory())){
-				giftList.add(toy);
-			}
-			if(!age.equals("")) {
-				if (Integer.parseInt(age) >= toy.getAgeAppropriate()) {
-					giftList.add(toy);
-				}
-			}
-			if(minPrice > toy.getPrice() && maxPrice <= toy.getPrice() ){
+			if((category.equalsIgnoreCase(toy.getCategory()) || category.equals("")) && (age >= toy.getAgeAppropriate() || age == 0) && (minPrice <= toy.getPrice() && maxPrice >= toy.getPrice())){
 				giftList.add(toy);
 			}
 		}

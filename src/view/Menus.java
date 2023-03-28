@@ -172,23 +172,28 @@ public class Menus {
 		System.out.println("Enter (3) Puzzles");
 		System.out.println("Enter (4) Board Game");
 		String userInput = keyboard.nextLine();
-		char userInputChar = userInput.charAt(0);
-		String optionChosen = null;
-		switch (Character.toUpperCase(userInputChar)) {
-			case '1':
-				optionChosen = "Figure";
-				break;
-			case '2':
-				optionChosen = "Animal";
-				break;
-			case '3':
-				optionChosen = "Puzzle";
-				break;
-			case '4':
-				optionChosen = "Board Game";
-				break;
-			default:
-				
+		String optionChosen = "";
+		boolean flag = true;
+		if(userInput.equals("")){
+			flag = false;
+		}
+		if (flag){
+			char userInputChar = userInput.charAt(0);
+
+			switch (Character.toUpperCase(userInputChar)) {
+				case '1':
+					optionChosen = "Figure";
+					break;
+				case '2':
+					optionChosen = "Animal";
+					break;
+				case '3':
+					optionChosen = "Puzzle";
+					break;
+				case '4':
+					optionChosen = "Board Game";
+					break;
+			}
 		}
 		return optionChosen;
 	}
