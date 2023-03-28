@@ -6,11 +6,19 @@ import model.Toys;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * This constructor initalizes a Scanner object.
+ * @author Prince
+ * @author Daniel
+ */
 public class Menus {
 	Scanner keyboard = new Scanner(System.in);
 	StoreManager sm;
-
+/**
+ * recieves a StoreManager object to be able
+ * to use StoreManager methods.
+ * @param sm StoreManager class.
+ */
 	public Menus(StoreManager sm){
 		this.sm = sm;
 	}
@@ -93,7 +101,7 @@ public class Menus {
 	}
 
 	/**
-	 *
+	 *Prints the contents of an ArrayList
 	 * @param toyList This holds an arraylist that holds an amount of toys, that relates to the user input, being,
 	 * if they want an Identical Serial Number, if their input contains with other toy names, or if it is the
 	 *                same Category.
@@ -165,7 +173,13 @@ public class Menus {
 		while(input.length() != 0){
 			input = keyboard.nextLine();
 		}
+		
 	}
+	/**
+	 * This method displays the preset option to user 
+	 * on what to choose from.
+	 * @return User input corresponding to a toy type.
+	 */
 	public String showMenufindIndenticalType() {
 		System.out.println("Enter (1) Figures");
 		System.out.println("Enter (2) Animals");
@@ -197,7 +211,12 @@ public class Menus {
 		}
 		return optionChosen;
 	}
-
+	/**
+	 * This method removes a Toy if user confirms
+	 * @param userRemoteToyInputChar Userinput that confirms if they want 
+	 * to remove a toy
+	 * @throws IOException validates the location of a file in a specific location.
+	 */
 	public void removeToyMenu(char userRemoteToyInputChar) throws IOException {
 		boolean rightInput = false;
 		char userRemoveToyInputChar = ' ';
@@ -211,7 +230,9 @@ public class Menus {
 
 		sm.start();
 	}
-
+	/**
+	 * Displays a goodbye message to the user.
+	 */
 	public void saveAndExitMenu() {
 		// SAVE DATA make set methods
 

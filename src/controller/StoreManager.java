@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -193,7 +192,10 @@ public class StoreManager {
 			start();
 		}
 	}
-
+	/**
+	 * This method asks User what the specifications are for their gift, put those values to searchGiftOptions method
+	 * @throws IOException verifies that the file is located
+	 */
 	private void giftSuggestion() throws IOException {
 		System.out.println("What is the age?");
 		String giftAge = keyboard.nextLine();
@@ -204,6 +206,13 @@ public class StoreManager {
 		ArrayList<Toys> giftOptions = searchGiftOptions(giftAge, option, giftPriceRange);
 		M.printInventory(giftOptions);
 	}
+	/**
+	 * Organizes the toys into a specified order from giftSuggestion Method.
+	 * @param stringAge User input of specified age.
+	 * @param category User input of specified category.
+	 * @param priceRange User input of specified price range.
+	 * @return a giftlist that qualifies as a specified toy.
+	 */
 	public ArrayList<Toys> searchGiftOptions(String stringAge, String category, String priceRange){
 		ArrayList<Toys> giftList = new ArrayList<Toys>();
 		int age = 0;
@@ -266,7 +275,7 @@ public class StoreManager {
 	 * Serial Number already exists in the toyList array
 	 * 
 	 * @param serialNum: The prompted serial number from the user
-	 * @throws IOException: checks if the file does not exist at a specific location
+	 * @throws IOException checks if the file does not exist at a specific location
 	 */
 	public void isSerialNumValid(String serialNum) throws IOException {
 
@@ -303,7 +312,7 @@ public class StoreManager {
 	 * the serial number's first digit is a specific number, asks for specific
 	 * attributes to pertains to the specific category.
 	 * 
-	 * @throws IOException- checks if a file does not exist at the promised location
+	 * @throws IOException checks if a file does not exist at the promised location
 	 */
 	public void userAddToy() throws IOException {
 		Scanner keyboard = new Scanner(System.in);
@@ -676,7 +685,7 @@ public class StoreManager {
 	 * Serial Number, would print the category specific toy description including
 	 * its unique properties. Separated by semi-colons.
 	 * 
-	 * @throws IOException: Checks if the file is found in the directed location
+	 * @throws IOException Checks if the file is found in the directed location
 	 */
 	public void saving() throws IOException {
 
