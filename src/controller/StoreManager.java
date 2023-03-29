@@ -31,11 +31,11 @@ public class StoreManager {
 	// Main variable declaration
 	Menus M;
 	final String FILE_PATH = "res/toys.txt";
-	ArrayList<Toys> toyList = new ArrayList<Toys>();
+	public static ArrayList<Toys> toyList = new ArrayList<Toys>();
 	File toyFile = new File(FILE_PATH);
 	Scanner keyboard = new Scanner(System.in);
 	private char classification;
-	private boolean first = false;
+
 	/**
 	 * Constructor of the class When ran creates a new menu object that has the
 	 * current store manager
@@ -130,80 +130,7 @@ public class StoreManager {
 		inputFile.close();
 	}
 
-	/**
-	 * This method initiates the program First calls the start menu, and recieves a
-	 * char, the char is then returned to be used to navigate other methods. Being,
-	 * Searching for a toy, remvoing a toy, adding a toy, or terminating the program
-	 * 
-	 * @throws IOException checks if the file is found at a specific location
-	 */
-	public void start() throws IOException {
-		if(first)
-		{
-			M.isEnterPressed();
-		}
-		first = true;
-		char introMenuOption = M.introMenu();
-		char optionPrint = ' ';
 
-
-		switch (introMenuOption) {
-		case '1':
-			char findToyOption = M.searchInventoryMenu();
-			switch (findToyOption) {
-
-			case '1':
-				ArrayList<Toys> identicalSerialNumberList = findToySerialNumber();
-				Toys wantedToySerialNumber = M.printInventory(identicalSerialNumberList);
-				purchase(wantedToySerialNumber);
-				M.purchaseMenu();
-				break;
-			case '2':
-				ArrayList<Toys> containsToyName = findToyName();
-				M.printInventory(containsToyName);
-				break;
-			case '3':
-				ArrayList<Toys> identicalTypeList = findIdenticalType();
-				Toys wantedToy = M.printInventory(identicalTypeList);
-				purchase(wantedToy);
-				M.purchaseMenu();
-				break;
-			case '4':
-
-				start();
-				break;
-			default:
-				System.out.println("This is not a valid option! Try again.");
-			}
-			break;
-		case '2':
-			userAddToy();
-			break;
-		case '3':
-			char inputResponse = userRemoveToy(); // 0298753495
-			break;
-		case '4':
-			giftSuggestion();
-			break;
-			case'5':
-				exit();
-				break;
-		default:
-			System.out.println("This is not a valid option! Try again.");
-			start();
-		}
-	}
-
-	private void giftSuggestion() throws IOException {
-		System.out.println("What is the age?");
-		String giftAge = keyboard.nextLine();
-		System.out.println("What is the Category?");
-		String option = M.showMenufindIndenticalType();
-		System.out.println("What is the Price Range?(separate the minimum and maximum with a - no $ needed)");
-		String giftPriceRange = keyboard.nextLine();
-		ArrayList<Toys> giftOptions = searchGiftOptions(giftAge, option, giftPriceRange);
-		M.printInventory(giftOptions);
-	}
 	public ArrayList<Toys> searchGiftOptions(String stringAge, String category, String priceRange){
 		ArrayList<Toys> giftList = new ArrayList<Toys>();
 		int age = 0;
@@ -236,66 +163,23 @@ public class StoreManager {
 	 * @param wantedToy this is a toy that the user wants to purchase
 	 * @throws IOException In case File is not found
 	 */
-	private void purchase(Toys wantedToy) throws IOException {
-		boolean notEqual = true;
+	public boolean purchase(Toys wantedToy) throws IOException {
+		boolean availableStock = true;
 
 		for (Toys toy : toyList) {
-
 			if (wantedToy.getAvailableCount() == 0) {
-				toyList.remove(wantedToy);
+				availableStock = false;
 				break;
 			}
-
 			if (wantedToy.equals(toy)) {
 				toy.setAvailableCount(toy.getAvailableCount() - 1);
 				wantedToy = toy;
-				notEqual = false;
 				break;
 			}
-
 		}
-		if (notEqual == true) {
-			System.out.println("Toy is not in Stock");
-			start();
-		}
+		return availableStock;
 	}
 
-	/**
-	 * This method validates if the prompted Serial Number is a valid message, by
-	 * checking if the Serial Number has 10 digits, has only integers, and if the
-	 * Serial Number already exists in the toyList array
-	 * 
-	 * @param serialNum: The prompted serial number from the user
-	 * @throws IOException: checks if the file does not exist at a specific location
-	 */
-	public void isSerialNumValid(String serialNum) throws IOException {
-
-		if (serialNum.length() != 10) {
-			System.out.println("Serial Number MUSt be 10 digits try again");
-			System.out.println();
-			userAddToy();
-		}
-		// for loop repeats for each character in the serial number
-		// checks characters if they have letters user must input a new serial number
-		for (int i = 0; i < serialNum.length(); i++) {
-			char serialNumChars = serialNum.charAt(i);
-			if (Character.isLetter(serialNumChars)) {
-				System.out.println("Serial numbers must be only have integers");
-				System.out.println();
-				userAddToy();
-			}
-
-		}
-
-		for (Toys toy : toyList) {
-			if (serialNum.equals(toy.getSerialNumber())) {
-				System.out.println("That serial Number already exists try again");
-				System.out.println();
-				userAddToy();
-			}
-		}
-
-	}
 
 	/**
 	 * This method asks the User for descriptions for a toy, specifically asking the
@@ -305,135 +189,26 @@ public class StoreManager {
 	 * 
 	 * @throws IOException- checks if a file does not exist at the promised location
 	 */
-	public void userAddToy() throws IOException {
-		Scanner keyboard = new Scanner(System.in);
-		String userToyCategory;
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount, char userClassification,String serialNumInput) throws IOException {
+		Figure Figure = new Figure(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
+				userAvailableCount, Character.toUpperCase(userClassification), serialNumInput);
+		toyList.add(Figure);
+	}
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount, String serialNumInput, char userToySize, String userToyMaterial){
+		Animals Animals = new Animals(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
+				userAvailableCount, serialNumInput, userToySize, userToyMaterial);
+		toyList.add(Animals);
+	}
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount,String serialNumInput, String userPuzzleType){
+		Puzzles Puzzle = new Puzzles(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
+				userAvailableCount, userPuzzleType, serialNumInput);
+		toyList.add(Puzzle);
 
-		// Taking user input for common attributes
-		System.out.print("Enter Serial Number: ");
-		String serialNumInput = keyboard.nextLine();
-		// Checks if the serial number is valid
-		isSerialNumValid(serialNumInput);
-		System.out.println();
-
-		System.out.print("Enter Toy Name: ");
-		String userToyName = keyboard.nextLine();
-		System.out.println();
-
-		System.out.print("Enter Toy Brand: ");
-		String userToyBrand = keyboard.nextLine();
-		System.out.println();
-
-		System.out.print("Enter Toy Price: ");
-		String userInputPrice = keyboard.nextLine();
-		float userToyPrice = Float.parseFloat(userInputPrice);
-		// Exception for if the price is a negative number stops the program
-		if (userToyPrice < 0) {
-			throw new IllegalArgumentException("Price must be a positive float");
-		}
-		System.out.println();
-
-		System.out.print("Enter Available Counts: ");
-		String userInputAvailableCount = keyboard.nextLine();
-		int userAvailableCount = Integer.parseInt(userInputAvailableCount);
-		System.out.println();
-
-		System.out.print("Enter Appropriate Age: ");
-		String userInputAgeAppropriate = keyboard.nextLine();
-		int userAgeAppropriate = Integer.parseInt(userInputAgeAppropriate);
-		System.out.println();
-
-		char digit = serialNumInput.charAt(0);
-
-		// Swtich for checking the first digit of serial number
-		// Cases ask for the unique attributes of the corresponding digit
-		// New toy is then created and added to the array list
-		// User goes back to main menu
-		switch (digit) {
-		case '0':
-		case '1':
-			userToyCategory = "Figure";
-			System.out.print("Enter figure classification(A,H,D): ");
-			String userClassificationInput = keyboard.nextLine();
-			char userClassification = userClassificationInput.charAt(0);
-			System.out.println();
-			Figure Figure = new Figure(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
-					userAvailableCount, Character.toUpperCase(userClassification), serialNumInput);
-			toyList.add(Figure);
-			System.out.println("New Toy Added!");
-
-			start();
-			break;
-
-		case '2':
-		case '3':
-			userToyCategory = "Animal";
-			System.out.print("Enter Material: ");
-			String userToyMaterial = keyboard.nextLine();
-			System.out.println();
-
-			System.out.print("Enter the size: ");
-			String sizeInput = keyboard.nextLine();
-			char userToySize = Character.toUpperCase(sizeInput.charAt(0));
-			System.out.println();
-
-			Animals Animals = new Animals(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
-					userAvailableCount, serialNumInput, userToySize, userToyMaterial);
-			toyList.add(Animals);
-			System.out.println("New Toy Added!");
-
-			start();
-
-			break;
-
-		case '4':
-		case '5':
-		case '6':
-			userToyCategory = "Puzzle";
-			System.out.print("Enter puzzle type: ");
-			String userPuzzleType = keyboard.nextLine();
-			System.out.println();
-
-			Puzzles Puzzle = new Puzzles(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
-					userAvailableCount, userPuzzleType, serialNumInput);
-			toyList.add(Puzzle);
-			System.out.println("New Toy Added!");
-
-			start();
-			break;
-
-		case '7':
-		case '8':
-		case '9':
-			userToyCategory = "Board Game";
-			System.out.print("Enter minimum amount of players: ");
-			int userToyMin = keyboard.nextInt();
-			System.out.println();
-
-			System.out.print("Enter maximum amount of players: ");
-			int userToyMax = keyboard.nextInt();
-			System.out.println();
-
-			// Custom exception happens when the min the user inputted is greater than the
-			// max they inputted
-			if (userToyMin > userToyMax) {
-				throw new IllegalArgumentException(
-						"Minimum number of players must be less than the maximum number of players");
-			}
-
-			System.out.print("Enter Designer Names (Use ',' to separate the names if there is more than one name):  ");
-			String userToyDesigners = keyboard.nextLine();
-			System.out.println();
-
-			BoardGames BoardGames = new BoardGames(userToyCategory, userToyName, userToyBrand, userToyPrice,
-					userAgeAppropriate, userAvailableCount, userToyDesigners, userToyMin, userToyMax, serialNumInput);
-			toyList.add(BoardGames);
-			System.out.println("New Toy Added!");
-
-			start();
-			break;
-		}
-
+	}
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount, String serialNumInput, int userToyMin, int userToyMax, String userToyDesigners){
+		BoardGames BoardGames = new BoardGames(userToyCategory, userToyName, userToyBrand, userToyPrice,
+				userAgeAppropriate, userAvailableCount, userToyDesigners, userToyMin, userToyMax, serialNumInput);
+		toyList.add(BoardGames);
 	}
 
 	/**
@@ -445,101 +220,15 @@ public class StoreManager {
 	 *         Toy
 	 * @throws IOException checks if the file exists at a given location
 	 */
-	private char userRemoveToy() throws IOException {
-		String serialNumberValid;
-		Toys foundToy = null;
-		boolean wrongInput = true;
-		String userRemoveToyInput;
-		char userRemoveToyInputChar = 0;
-
-		serialNumberValid = serialNumberValidation();
-
+	public void userRemoveToy(Toys foundToy) throws IOException {
 		for (Toys toy : toyList) {
-			if (serialNumberValid.equals(toy.getSerialNumber())) {
-				foundToy = toy;
+			if (foundToy.getSerialNumber().equals(toy.getSerialNumber())) {
+				toyList.remove(toy);
 			}
 		}
-		System.out.println("This Item Found: ");
-		System.out.println(foundToy);
-
-		while (wrongInput) {
-
-			System.out.print("Do you want to remove it? (Y/N)?");
-			userRemoveToyInput = keyboard.nextLine();
-			userRemoveToyInputChar = userRemoveToyInput.toLowerCase().charAt(0);
-
-			if (userRemoveToyInputChar == 'y' || userRemoveToyInputChar == 'n') {
-				wrongInput = false;
-			} else {
-				System.out.println("Wrong input... Try again");
-			}
-		}
-
-		if (userRemoveToyInputChar == 'y') {
-			for (Toys toy : toyList) {
-				if (foundToy.getSerialNumber().equals(toy.getSerialNumber())) {
-					toyList.remove(toy);
-					M.removeToyMenu(userRemoveToyInputChar);
-					break;
-				} else if (foundToy.getAvailableCount() == 0) {
-					System.out.println("Serial Number cannot be found");
-
-					start();
-				}
-			}
-		} else if (userRemoveToyInputChar == 'n') {
-			start();
-		}
-		return userRemoveToyInputChar;
 	}
 
-	/**
-	 * This method prompts the user for a Serial Number, checks if the number is 10
-	 * digits long, has no letters, or if the item already exists in the ArrayList,
-	 * similar to the first Validation, but returns the prompted String
-	 * 
-	 * @return toySerialNumber The user input for Serial Number
-	 * @throws IOException checks if the file is found in a particular destination
-	 */
-	public String serialNumberValidation() throws IOException {
-		String toySerialNumber = null;
-		boolean validSerialNumber = false;
-		boolean hasLetter = false;
-		boolean inStore = false;
 
-		while (!validSerialNumber) {
-			System.out.print("Enter a Serial Number: ");
-			toySerialNumber = keyboard.nextLine();
-
-			for (int i = 0; i < toySerialNumber.length(); i++) {
-				char serialNumChars = toySerialNumber.charAt(i);
-				if (Character.isLetter(serialNumChars)) {
-					hasLetter = true;
-				}
-			}
-			if (hasLetter) {
-				System.out.println("Serial numbers must only have integers");
-			}
-			if (toySerialNumber.length() != 10) {
-				System.out.println("Serial Number must have 10 digits try again");
-			}
-			for (Toys toy : toyList) {
-				if (toySerialNumber.equals(toy.getSerialNumber())) {
-					inStore = true;
-				}
-			}
-			if (!hasLetter && toySerialNumber.length() == 10 && !inStore) {
-				System.out.println("Item is not found in Store... Try Again");
-
-				start();
-			}
-			if (!hasLetter && toySerialNumber.length() == 10 && inStore) {
-				validSerialNumber = true;
-			}
-			hasLetter = false;
-		}
-		return toySerialNumber;
-	}
 
 	/**
 	 * This method searches for a Toy through a prompted message, if the toy is in
@@ -549,10 +238,7 @@ public class StoreManager {
 	 *         input.
 	 * @throws IOException Checks if a file is found at a specific destination
 	 */
-	private ArrayList<Toys> findToySerialNumber() throws IOException {
-		String toySerialNumber = null;
-		toySerialNumber = serialNumberValidation();
-
+	public ArrayList<Toys> findToySerialNumber(String toySerialNumber) throws IOException {
 		ArrayList<Toys> identicalSerialNumber = new ArrayList<>();
 		boolean isFound = false;
 
@@ -573,29 +259,15 @@ public class StoreManager {
 	 * 
 	 * @return ArrayList this holds all the toys that has the same category
 	 */
-	private ArrayList<Toys> findIdenticalType() {
+	public ArrayList<Toys> findIdenticalType(char userInputTypeChar) {
 		ArrayList<Toys> identicalTypes = new ArrayList<>();
-		boolean notInstanceOf = false;
-		String userInputType = null;
-		String userInputTypeLowerCase = null;
-		char userInputTypeChar;
-
-		while (!notInstanceOf) {
-			System.out.println("Enter (1) Figures");
-			System.out.println("Enter (2) Animals");
-			System.out.println("Enter (3) Puzzles");
-			System.out.println("Enter (4) Board Game");
-
-			userInputType = keyboard.nextLine();
-			userInputTypeChar = userInputType.charAt(0);
-			switch (userInputTypeChar) {
+		switch (userInputTypeChar) {
 			case '1':
 				for (Toys toy : toyList) {
 					if (toy instanceof Figure) {
 						identicalTypes.add(toy);
 					}
 				}
-				notInstanceOf = true;
 				break;
 			case '2':
 				for (Toys toy : toyList) {
@@ -603,7 +275,6 @@ public class StoreManager {
 						identicalTypes.add(toy);
 					}
 				}
-				notInstanceOf = true;
 				break;
 			case '3':
 				for (Toys toy : toyList) {
@@ -611,7 +282,6 @@ public class StoreManager {
 						identicalTypes.add(toy);
 					}
 				}
-				notInstanceOf = true;
 				break;
 			case '4':
 				for (Toys toy : toyList) {
@@ -619,12 +289,7 @@ public class StoreManager {
 						identicalTypes.add(toy);
 					}
 				}
-				notInstanceOf = true;
 				break;
-			default:
-				System.out.println("This is not a valid option! Try again.");
-			}
-
 		}
 		return identicalTypes;
 	}
@@ -636,24 +301,20 @@ public class StoreManager {
 	 * @throws IOException: Checks if the file is found in the directed location
 	 * @return findToyName returns all the toys that contains UserInput
 	 */
-	private ArrayList<Toys> findToyName() throws IOException {
+	public ArrayList<Toys> findToyName(String userToyName) throws IOException {
 		ArrayList<Toys> containsToyName = new ArrayList<>();
 		boolean toyFound = false;
 
-		System.out.print("Enter Toy Name: ");
-		String userInput = keyboard.nextLine();
-		userInput = userInput.toLowerCase();
-
 		for (Toys toy : toyList) {
-			if ((toy.getName().toLowerCase()).contains(userInput)) { // Use of knowledge of contains
+			if ((toy.getName().toLowerCase()).contains(userToyName)) { // Use of knowledge of contains
 																		// https://www.w3schools.com/java/ref_string_contains.asp
 				containsToyName.add(toy);
 				toyFound = true;
 			}
 		}
 		if (toyFound == false) {
-			System.out.println("Cannot Find Toy... Directing back to Menu");
-			start();
+			Toys notFound = new Figure("","","", 0.00F,0,0,' '," ");
+			containsToyName.add(notFound);
 		}
 
 		return containsToyName;
@@ -665,7 +326,7 @@ public class StoreManager {
 	 * 
 	 * @throws IOException: Checks if the file is found in the directed location
 	 */
-	private void exit() throws IOException {
+	public void exit() throws IOException {
 		M.saveAndExitMenu();
 		saving();
 		System.exit(0);
