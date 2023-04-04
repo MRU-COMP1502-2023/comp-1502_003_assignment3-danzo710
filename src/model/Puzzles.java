@@ -20,7 +20,7 @@ public class Puzzles extends Toys {
 	 * @param puzzletype The inputted Puzzle type unique attribute for puzzles it is set in this constructor
 	 * @param serialNumber The inputted serial number it is set to the superclass constructor
 	 */
-	public Puzzles(String category, String name, String brand, float price, int ageAppropriate, int availableCount,
+	public Puzzles(String category, String name, String brand, double price, int ageAppropriate, int availableCount,
 				   String puzzletype, String serialNumber) {
 		super(category, name, brand, price, ageAppropriate, availableCount, serialNumber);
 		this.puzzleType = puzzletype;
@@ -32,9 +32,9 @@ public class Puzzles extends Toys {
 	 * @return a properly formatted string representation for the object
 	 */
 	public String toString() {
-		return "Category: Puzzle, Name: " + name + ", Made by: " + brand + ", Price: " + price + "$, "
-				+ "Number available: " + availableCount + ", Recommended age: " + ageAppropriate + ", Type of Puzzle: "
-				+ puzzleType + ", Serial Number: " + serialNumber;
+		return "Category: Puzzle, Name: " + getName() + ", Made by: " + getBrand() + ", Price: " + getPrice() + "$, "
+				+ "Number available: " + getAvailableCount() + ", Recommended age: " + getAgeAppropriate() + ", Type of Puzzle: "
+				+ puzzleType + ", Serial Number: " + getSerialNumber();
 	}
 
 	/**

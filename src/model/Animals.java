@@ -21,7 +21,7 @@ public class Animals extends Toys {
 	 * @param size The inputted size unique attribute for animals it is set in this constructor
 	 * @param material The inputted material unique attribute for animals it is set in this constructor
 	 */
-	public Animals(String category, String name, String brand, float price, int ageAppropriate, int availableCount,
+	public Animals(String category, String name, String brand, double price, int ageAppropriate, int availableCount,
 				   String serialNumber, char size, String material) {
 		super(category, name, brand, price, ageAppropriate, availableCount, serialNumber);
 		this.material = material;
@@ -34,9 +34,9 @@ public class Animals extends Toys {
 	 * @return a properly formatted string representation for the object
 	 */
 	public String toString() {
-		return "Category: Animal, Name: " + name + ", Made by: " + brand + ", Price: " + price + "$, "
-				+ "Number available: " + availableCount + ", Recommended age: " + ageAppropriate + ", Size: " + size
-				+ ", Material Used: " + material + ", Serial Number: " + serialNumber;
+		return "Category: Animal, Name: " + getName() + ", Made by: " + getBrand() + ", Price: " + getPrice() + "$, "
+				+ "Number available: " + getAvailableCount() + ", Recommended age: " + getAgeAppropriate() + ", Size: " + size
+				+ ", Material Used: " + material + ", Serial Number: " + getSerialNumber();
 	}
 
 

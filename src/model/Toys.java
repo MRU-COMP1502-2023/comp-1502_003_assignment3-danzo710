@@ -3,15 +3,15 @@ package model;
  * Toys superclass contains the common methods for all subclasses
  * Contains all the common toy attributes
  */
-public class Toys {
+public abstract class Toys {
 	//Variable declaration
-	String name;
-	String brand;
-	String serialNumber;
-	String category;
-	float price;
-	int availableCount;
-	int ageAppropriate;
+	private String name;
+	private String brand;
+	private String serialNumber;
+	private String category;
+	private double price;
+	private int availableCount;
+	private int ageAppropriate;
 
 	/**
 	 * Super Class constructor sets the values of the parameters to the variables
@@ -23,7 +23,7 @@ public class Toys {
 	 * @param availableCount The current number of toys available
 	 * @param serialNumber The serial number for the toy it is unique
 	 */
-	public Toys(String category, String name, String brand, float price, int ageAppropriate, int availableCount, String serialNumber){
+	public Toys(String category, String name, String brand, double price, int ageAppropriate, int availableCount, String serialNumber){
 		this.name = name;
 		this.brand = brand;
 		this.category = category;
@@ -85,7 +85,7 @@ public class Toys {
 	 * Gets the current price
 	 * @return the current values of the price variable
 	 */
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 

@@ -20,7 +20,7 @@ public class Figure extends Toys {
 	 * @param classification The inputted classification unique attribute for figures it is set in this constructor
 	 * @param serialNumber The inputted serial number it is set to the superclass constructor
 	 */
-	public Figure(String category, String name, String brand, float price, int ageAppropriate, int availableCount,
+	public Figure(String category, String name, String brand, double price, int ageAppropriate, int availableCount,
 				  char classification, String serialNumber) {
 		super(category, name, brand, price, ageAppropriate, availableCount, serialNumber);
 		this.classification = Character.toUpperCase(classification);
@@ -32,9 +32,9 @@ public class Figure extends Toys {
 	 * @return a properly formatted string representation for the object
 	 */
 	public String toString() {
-		return "Category: Figure, Name: " + name + ", Made by: " + brand + ", Price: " + price + "$, "
-				+ "Number available: " + availableCount + ", Recommended age: " + ageAppropriate
-				+ ", figure Classification: " + classification + ", Serial Number: " + serialNumber;
+		return "Category: Figure, Name: " + getName() + ", Made by: " + getBrand() + ", Price: " + getPrice() + "$, "
+				+ "Number available: " + getAvailableCount() + ", Recommended age: " + getAgeAppropriate()
+				+ ", figure Classification: " + classification + ", Serial Number: " + getSerialNumber();
 	}
 
 	/**

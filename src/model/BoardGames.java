@@ -24,7 +24,7 @@ public class BoardGames extends Toys {
 	 * @param max The inputted max number of players unique attribute for board games it is set in this constructor
 	 * @param serialNumber The inputted serial number it is set to the superclass constructor
 	 */
-	public BoardGames(String category, String name, String brand, float price, int ageAppropriate, int availableCount,
+	public BoardGames(String category, String name, String brand, double price, int ageAppropriate, int availableCount,
 					  String designers, int min, int max, String serialNumber) {
 		super(category, name, brand, price, ageAppropriate, availableCount, serialNumber);
 		this.designers = designers;
@@ -38,9 +38,9 @@ public class BoardGames extends Toys {
 	 * @return a properly formatted string representation for the object
 	 */
 	public String toString() {
-		return "Category: Board Game, Name: " + name + ", Made by: " + brand + ", Price: " + price + "$, "
-				+ "Number available: " + availableCount + ", Recommended age: " + ageAppropriate + ", Game Designers: "
-				+ designers + ", Number of Players: " + min + "-" + max + ", Serial Number: " + serialNumber;
+		return "Category: Board Game, Name: " + getName() + ", Made by: " + getBrand() + ", Price: " + getPrice() + "$, "
+				+ "Number available: " + getAvailableCount() + ", Recommended age: " + getAgeAppropriate() + ", Game Designers: "
+				+ designers + ", Number of Players: " + min + "-" + max + ", Serial Number: " + getSerialNumber();
 	}
 	/**
 	 * Gets the current designers

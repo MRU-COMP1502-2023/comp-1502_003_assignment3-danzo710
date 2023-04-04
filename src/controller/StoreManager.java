@@ -65,7 +65,7 @@ public class StoreManager {
 			String name = values[1];
 			String brand = values[2];
 			String category;
-			float price = Float.parseFloat(values[3]);
+			double price = Double.parseDouble(values[3]);
 			int availableCount = Integer.parseInt(values[4]);
 			int ageAppropriate = Integer.parseInt(values[5]);
 			char digit = SerialNumber.charAt(0);
@@ -188,23 +188,23 @@ public class StoreManager {
 	 * 
 	 * @throws IOException- checks if a file does not exist at the promised location
 	 */
-	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount, char userClassification,String serialNumInput) throws IOException {
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, double userToyPrice, int userAgeAppropriate, int userAvailableCount, char userClassification,String serialNumInput) throws IOException {
 		Figure Figure = new Figure(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
 				userAvailableCount, Character.toUpperCase(userClassification), serialNumInput);
 		toyList.add(Figure);
 	}
-	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount, String serialNumInput, char userToySize, String userToyMaterial){
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, double userToyPrice, int userAgeAppropriate, int userAvailableCount, String serialNumInput, char userToySize, String userToyMaterial){
 		Animals Animals = new Animals(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
 				userAvailableCount, serialNumInput, userToySize, userToyMaterial);
 		toyList.add(Animals);
 	}
-	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount,String serialNumInput, String userPuzzleType){
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, double userToyPrice, int userAgeAppropriate, int userAvailableCount,String serialNumInput, String userPuzzleType){
 		Puzzles Puzzle = new Puzzles(userToyCategory, userToyName, userToyBrand, userToyPrice, userAgeAppropriate,
 				userAvailableCount, userPuzzleType, serialNumInput);
 		toyList.add(Puzzle);
 
 	}
-	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, float userToyPrice, int userAgeAppropriate, int userAvailableCount, String serialNumInput, int userToyMin, int userToyMax, String userToyDesigners){
+	public void userAddToy(String userToyCategory, String userToyName, String userToyBrand, double userToyPrice, int userAgeAppropriate, int userAvailableCount, String serialNumInput, int userToyMin, int userToyMax, String userToyDesigners){
 		BoardGames BoardGames = new BoardGames(userToyCategory, userToyName, userToyBrand, userToyPrice,
 				userAgeAppropriate, userAvailableCount, userToyDesigners, userToyMin, userToyMax, serialNumInput);
 		toyList.add(BoardGames);

@@ -420,10 +420,10 @@ public class Menus {
 
 		System.out.print("Enter Toy Price: ");
 		String userInputPrice = keyboard.nextLine();
-		float userToyPrice = Float.parseFloat(userInputPrice);
+		double userToyPrice = Double.parseDouble(userInputPrice);
 		// Exception for if the price is a negative number stops the program
 		if (userToyPrice < 0) {
-			throw new IllegalArgumentException("Price must be a positive float");
+			throw new IllegalArgumentException("Price must be a positive double");
 		}
 		System.out.println();
 
